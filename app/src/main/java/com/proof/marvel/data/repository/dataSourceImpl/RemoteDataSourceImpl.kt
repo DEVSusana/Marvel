@@ -8,12 +8,13 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RemoteDataSourceImpl @Inject constructor(private val apiService: ApiService): RemoteDataSource {
+class RemoteDataSourceImpl @Inject constructor(private val apiService: ApiService) :
+    RemoteDataSource {
     override suspend fun getList(): Response<MarvelApiResponse> {
-       return apiService.getCharactersList()
+        return apiService.getCharactersList()
     }
 
     override suspend fun getDetails(characterId: Int): Response<MarvelApiResponse> {
-       return apiService.getCharacterInfo(characterId)
+        return apiService.getCharacterInfo(characterId)
     }
 }

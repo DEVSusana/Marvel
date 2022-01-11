@@ -25,7 +25,7 @@ object UseCaseModule {
     @Singleton
     fun provideGetDetailsUseCase(
         repository: Repository
-    ): GetDetailsUseCase{
+    ): GetDetailsUseCase {
         return GetDetailsUseCase(repository)
     }
 

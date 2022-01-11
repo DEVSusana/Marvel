@@ -11,7 +11,7 @@ class ViewModelFactory @Inject constructor(
     private val app: Application,
     private val getListUseCase: GetListUseCase,
     private val getDetailsUseCase: GetDetailsUseCase
-): ViewModelProvider.Factory {
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return modelClass.getConstructor(
             Application::class.java,

@@ -16,7 +16,7 @@ object RemoteDataModule {
     @Singleton
     fun provideRemoteDataSource(
         apiService: ApiService
-    ): RemoteDataSource{
+    ): RemoteDataSource {
         return RemoteDataSourceImpl(apiService)
     }
 }

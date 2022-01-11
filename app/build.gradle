@@ -16,7 +16,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "URL_BASE", "\"https://developer.marvel.com/docs\""
+        buildConfigField "String", "URL_BASE", "\"https://developer.marvel.com/docs/\""
         buildConfigField "String", "API_KEY", "\"a73c09889f9199c4ec2504fe7c025b80\""
 
         vectorDrawables {

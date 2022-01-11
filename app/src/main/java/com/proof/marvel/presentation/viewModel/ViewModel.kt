@@ -72,11 +72,11 @@ class ViewModel(
     val getDetail: MutableLiveData<Resource<MarvelApiResponse>> = MutableLiveData()
     val getDetailState = mutableStateOf(getDetail.value)
 
-    fun getDetailResponse() = viewModelScope.launch(Dispatchers.IO) {
+    fun getDetailResponse(id: Int) = viewModelScope.launch(Dispatchers.IO) {
         getDetail.postValue(Resource.Loading())
         try {
             if (isNetworkAvailable(app)) {
-                val apiResult = getListUseCase.execute()
+                val apiResult = getDetailsUseCase.execute(id)
                 getDetailState.value = apiResult
                 getDetail.postValue(apiResult)
             } else {

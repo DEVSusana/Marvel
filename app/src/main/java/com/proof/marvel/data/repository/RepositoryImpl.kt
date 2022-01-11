@@ -9,11 +9,11 @@ import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource
-): Repository {
+) : Repository {
     override suspend fun getList(): Resource<MarvelApiResponse> {
-       return responseToResource(
-           remoteDataSource.getList()
-       )
+        return responseToResource(
+            remoteDataSource.getList()
+        )
     }
 
     override suspend fun getDetails(characterId: Int): Resource<MarvelApiResponse> {
@@ -22,9 +22,9 @@ class RepositoryImpl @Inject constructor(
         )
     }
 
-    private fun responseToResource(response: Response<MarvelApiResponse>): Resource<MarvelApiResponse>{
-        if(response.isSuccessful){
-            response.body()?.let {result->
+    private fun responseToResource(response: Response<MarvelApiResponse>): Resource<MarvelApiResponse> {
+        if (response.isSuccessful) {
+            response.body()?.let { result ->
                 return Resource.Success(result)
             }
         }
