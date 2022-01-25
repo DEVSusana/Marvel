@@ -16,8 +16,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "URL_BASE", "\"https://developer.marvel.com/docs/\""
-        buildConfigField "String", "API_KEY", "\"a73c09889f9199c4ec2504fe7c025b80\""
+        buildConfigField "String", "URL_BASE", "\"https://gateway.marvel.com/\""
+        buildConfigField "String", "PUBLIC_API_KEY", "\"a73c09889f9199c4ec2504fe7c025b80\""
+        buildConfigField "String", "PRIVATE_API_KEY", "\"799d9ef662f259bc86ac2a9be80fb2e041bd6601\""
 
         vectorDrawables {
             useSupportLibrary true
@@ -71,7 +72,10 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.3'
+    //Logging Network Calls
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     // LiveData

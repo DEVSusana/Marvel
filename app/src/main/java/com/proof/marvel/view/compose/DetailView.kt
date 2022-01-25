@@ -32,7 +32,7 @@ fun detailView(viewModel: ViewModel, id: Int) {
                         imageMarvel(detail = detail.data.results[0])
                     }
                     Column {
-                        if (detail != null) {
+                        if (detail != null && detail.data.results.isNotEmpty() ) {
                             Text(
                                 text = detail.data.results[0].name,
                                 style = MaterialTheme.typography.h3
@@ -43,16 +43,22 @@ fun detailView(viewModel: ViewModel, id: Int) {
                                 style = MaterialTheme.typography.h5
                             )
                             Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                text = detail.data.results[0].stories.items[0].name,
-                                style = MaterialTheme.typography.h5
-                            )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                text = detail.data.results[0].events.items[0].name,
-                                style = MaterialTheme.typography.h5
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
+                            detail.data.results[0].stories.items[0].let {
+                                Text(
+                                    text = detail.data.results[0].stories.items[0].name,
+                                    style = MaterialTheme.typography.h5
+                                )
+                                Spacer(modifier = Modifier.height(4.dp))
+                            }
+                            detail.data.results[0].events.items.let {
+                                if(detail.data.results[0].events.items.isNotEmpty()) {
+                                    Text(
+                                        text = detail.data.results[0].events.items[0].name,
+                                        style = MaterialTheme.typography.h5
+                                    )
+                                    Spacer(modifier = Modifier.height(8.dp))
+                                }
+                            }
                         }
                     }
                 }

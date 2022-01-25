@@ -10,15 +10,11 @@ import retrofit2.http.Query
 interface ApiService {
     @GET("v1/public/characters")
     suspend fun getCharactersList(
-        @Query("apikey")
-        apikey: String = BuildConfig.API_KEY
     ): Response<MarvelApiResponse>
 
     @GET("v1/public/characters/{characterId}")
     suspend fun getCharacterInfo(
         @Path("characterId")
-        characterId: Int,
-        @Query("apikey")
-        apikey: String = BuildConfig.API_KEY
+        characterId: Int
     ): Response<MarvelApiResponse>
 }
