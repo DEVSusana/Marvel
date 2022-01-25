@@ -6,9 +6,11 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import coil.annotation.ExperimentalCoilApi
 import com.proof.marvel.data.model.Result
 import com.proof.marvel.presentation.viewModel.ViewModel
 
+@ExperimentalCoilApi
 @Composable
 fun NavigationComponent(
     navController: NavHostController,
@@ -26,7 +28,7 @@ fun NavigationComponent(
             "details/{id}",
             arguments = listOf(navArgument("id") { type = NavType.IntType })
         ) { backStackEntry ->
-            backStackEntry.arguments?.getInt("id")?.let { detailView(viewModel, it) }
+            backStackEntry.arguments?.getInt("id")?.let { DetailView(viewModel, it) }
         }
     }
 }

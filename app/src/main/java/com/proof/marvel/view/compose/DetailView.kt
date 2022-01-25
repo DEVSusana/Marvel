@@ -6,21 +6,28 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import coil.annotation.ExperimentalCoilApi
 import com.proof.marvel.data.Utils.Resource
 import com.proof.marvel.data.model.MarvelApiResponse
 import com.proof.marvel.presentation.viewModel.ViewModel
 
+@ExperimentalCoilApi
 @Composable
-fun detailView(viewModel: ViewModel, id: Int) {
+fun DetailView(viewModel: ViewModel, id: Int) {
     viewModel.getDetailResponse(id)
-    val detail = viewModel.getDetailState.value?.data
 
     when (viewModel.getDetail.value) {
         is Resource.Success -> {
+            val detail by remember {
+                mutableStateOf(viewModel.getDetail.value)
+            }
             viewModel.getDetail.value?.data.let {
                 Row(
                     modifier = Modifier
@@ -29,33 +36,44 @@ fun detailView(viewModel: ViewModel, id: Int) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     if (detail != null) {
-                        ImageMarvel(detail = detail.data.results[0])
+                        detail!!.data?.data?.results?.get(0)
+                            ?.let { it1 -> ImageMarvel(detail = it1) }
                     }
                     Column {
-                        if (detail != null && detail.data.results.isNotEmpty() ) {
-                            Text(
-                                text = detail.data.results[0].name,
-                                style = MaterialTheme.typography.h5
-                            )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                text = detail.data.results[0].description,
-                                style = MaterialTheme.typography.body1
-                            )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            detail.data.results[0].stories.items[0].let {
+                        if (detail != null && detail!!.data?.data?.results?.isNotEmpty() == true) {
+                            detail!!.data?.data?.results?.get(0)?.let { it1 ->
                                 Text(
-                                    text = detail.data.results[0].stories.items[0].name,
-                                    style = MaterialTheme.typography.body2
+                                    text = it1.name,
+                                    style = MaterialTheme.typography.h5
                                 )
+                            }
+                            Spacer(modifier = Modifier.height(4.dp))
+                            detail!!.data?.data?.results?.get(0)?.description?.let { it1 ->
+                                Text(
+                                    text = it1,
+                                    style = MaterialTheme.typography.body1
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(4.dp))
+                            detail!!.data?.data?.results?.get(0)?.stories?.items?.get(0).let {
+                                detail!!.data?.data?.results?.get(0)?.stories?.items?.get(0)
+                                    ?.let { it1 ->
+                                        Text(
+                                            text = it1.name,
+                                            style = MaterialTheme.typography.body2
+                                        )
+                                    }
                                 Spacer(modifier = Modifier.height(4.dp))
                             }
-                            detail.data.results[0].events.items.let {
-                                if(detail.data.results[0].events.items.isNotEmpty()) {
-                                    Text(
-                                        text = detail.data.results[0].events.items[0].name,
-                                        style = MaterialTheme.typography.body2
-                                    )
+                            detail!!.data?.data?.results?.get(0)?.events?.items.let {
+                                if (detail!!.data?.data?.results?.get(0)?.events?.items?.isNotEmpty() == true) {
+                                    detail!!.data?.data?.results?.get(0)?.events?.items?.get(0)
+                                        ?.let { it1 ->
+                                            Text(
+                                                text = it1.name,
+                                                style = MaterialTheme.typography.body2
+                                            )
+                                        }
                                     Spacer(modifier = Modifier.height(8.dp))
                                 }
                             }

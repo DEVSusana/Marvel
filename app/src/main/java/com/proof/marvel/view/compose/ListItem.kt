@@ -13,10 +13,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import coil.annotation.ExperimentalCoilApi
 import com.proof.marvel.data.model.Result
 
+@ExperimentalCoilApi
 @Composable
-fun listItem(
+fun ListItem(
     navController: NavController,
     detail: Result,
     index: Int,

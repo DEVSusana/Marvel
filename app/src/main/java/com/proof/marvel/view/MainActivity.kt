@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.rememberNavController
+import coil.annotation.ExperimentalCoilApi
 import com.proof.marvel.data.Utils.Resource
 import com.proof.marvel.data.model.Result
 import com.proof.marvel.domain.repository.Repository
@@ -30,6 +31,7 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var list: List<Result>
 
+    @ExperimentalCoilApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this, viewModelFactory)[ViewModel::class.java]

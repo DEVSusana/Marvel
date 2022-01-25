@@ -70,14 +70,12 @@ class ViewModel(
     }
 
     val getDetail: MutableLiveData<Resource<MarvelApiResponse>> = MutableLiveData()
-    val getDetailState = mutableStateOf(getDetail.value)
 
     fun getDetailResponse(id: Int) = viewModelScope.launch(Dispatchers.IO) {
         getDetail.postValue(Resource.Loading())
         try {
             if (isNetworkAvailable(app)) {
                 val apiResult = getDetailsUseCase.execute(id)
-                getDetailState.value = apiResult
                 getDetail.postValue(apiResult)
             } else {
                 getDetail.postValue(Resource.Error("Internet is not available"))
@@ -86,6 +84,7 @@ class ViewModel(
             getDetail.postValue(Resource.Error(e.message.toString()))
         }
     }
+
 
 
 }

@@ -8,8 +8,10 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import coil.annotation.ExperimentalCoilApi
 import com.proof.marvel.data.model.Result
 
+@ExperimentalCoilApi
 @Composable
 fun DisplayList(navController: NavController, list: List<Result>) {
     var selectedIndex by remember { mutableStateOf(-1) }
@@ -20,7 +22,7 @@ fun DisplayList(navController: NavController, list: List<Result>) {
             itemsIndexed(
                 items = list
             ) { index, item ->
-                listItem(navController = navController, detail = item, index, selectedIndex) { i ->
+                ListItem(navController = navController, detail = item, index, selectedIndex) { i ->
                     selectedIndex = i
                 }
             }
