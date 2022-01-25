@@ -40,11 +40,11 @@ fun listItem(
                     .clickable { navController.navigate("details/${detail.id}") },
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                imageMarvel(detail = detail)
+                ImageMarvel(detail = detail)
                 Column {
-                    Text(text = detail.name, style = MaterialTheme.typography.h3)
+                    Text(text = detail.name, style = MaterialTheme.typography.h5)
                     Spacer(modifier = Modifier.height(4.dp))
-                    Text(text = detail.description, style = MaterialTheme.typography.h5)
+                    Text(text = detail.description, style = MaterialTheme.typography.body1)
                     Spacer(modifier = Modifier.height(8.dp))
                 }
             }
