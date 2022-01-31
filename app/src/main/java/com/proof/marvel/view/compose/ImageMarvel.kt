@@ -21,7 +21,9 @@ import com.proof.marvel.data.model.Result
 fun ImageMarvel(detail: Result) {
     Image(
         painter = rememberImagePainter(
-            "${detail.thumbnail.path}.${detail.thumbnail.extension}"
+            detail.thumbnail.let {
+                "${detail.thumbnail.path}.${detail.thumbnail.extension}"
+            }
         ),
         contentDescription = null,
         contentScale = ContentScale.Inside,

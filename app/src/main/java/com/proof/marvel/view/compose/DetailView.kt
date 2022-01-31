@@ -55,15 +55,17 @@ fun DetailView(viewModel: ViewModel, id: Int) {
                                 )
                             }
                             Spacer(modifier = Modifier.height(4.dp))
-                            detail!!.data?.data?.results?.get(0)?.stories?.items?.get(0).let {
-                                detail!!.data?.data?.results?.get(0)?.stories?.items?.get(0)
-                                    ?.let { it1 ->
-                                        Text(
-                                            text = it1.name,
-                                            style = MaterialTheme.typography.body2
-                                        )
-                                    }
-                                Spacer(modifier = Modifier.height(4.dp))
+                            if(detail!!.data?.data?.results?.get(0)?.stories?.items?.isNotEmpty() == true) {
+                                detail!!.data?.data?.results?.get(0)?.stories?.items?.get(0).let {
+                                    detail!!.data?.data?.results?.get(0)?.stories?.items?.get(0)
+                                        ?.let { it1 ->
+                                            Text(
+                                                text = it1.name,
+                                                style = MaterialTheme.typography.body2
+                                            )
+                                        }
+                                    Spacer(modifier = Modifier.height(4.dp))
+                                }
                             }
                             detail!!.data?.data?.results?.get(0)?.events?.items.let {
                                 if (detail!!.data?.data?.results?.get(0)?.events?.items?.isNotEmpty() == true) {
