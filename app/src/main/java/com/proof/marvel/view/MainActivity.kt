@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this, viewModelFactory)[ViewModel::class.java]
         viewModel.getListResponse()
-        viewModel.getList.observe(this, { response ->
+        viewModel.getList.observe(this) { response ->
             when (response) {
                 is Resource.Success -> {
                     response.data?.let {
@@ -66,6 +66,6 @@ class MainActivity : ComponentActivity() {
 
                 }
             }
-        })
+        }
     }
 }
