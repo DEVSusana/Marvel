@@ -4,16 +4,16 @@ import com.proof.marvel.data.Utils.Resource
 import com.proof.marvel.data.model.MarvelApiResponse
 import com.proof.marvel.data.repository.dataSource.RemoteDataSource
 import com.proof.marvel.domain.repository.Repository
+import io.reactivex.Observable
 import retrofit2.Response
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource
 ) : Repository {
-    override suspend fun getList(): Resource<MarvelApiResponse> {
-        return responseToResource(
-            remoteDataSource.getList()
-        )
+    override fun getList(offset: Int): Observable<MarvelApiResponse> {
+
+        return remoteDataSource.getList(offset)
     }
 
     override suspend fun getDetails(characterId: Int): Resource<MarvelApiResponse> {

@@ -1,5 +1,6 @@
 package com.proof.marvel.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -16,6 +17,8 @@ import com.proof.marvel.presentation.viewModel.ViewModelFactory
 import com.proof.marvel.view.compose.NavigationComponent
 import com.proof.marvel.view.compose.ShowProgressBar
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -31,41 +34,26 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var list: List<Result>
 
+    @SuppressLint("CheckResult")
     @ExperimentalCoilApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this, viewModelFactory)[ViewModel::class.java]
-        viewModel.getListResponse()
-        viewModel.getList.observe(this) { response ->
-            when (response) {
-                is Resource.Success -> {
-                    response.data?.let {
-                        list = response.data.data.results
-                        setContent {
-                            val navController = rememberNavController()
-                            NavigationComponent(
-                                navController = navController,
-                                list = list,
-                                viewModel = viewModel
-                            )
-                        }
-                    }
-                }
-                is Resource.Error -> {
-                    response.message?.let {
-                        Toast.makeText(this, "An error occurred : $it", Toast.LENGTH_LONG).show()
-                        Log.i("ERROR", it)
-                    }
-                }
-
-                is Resource.Loading -> {
+        viewModel.getList
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { response ->
+                response.let {
                     setContent {
-                        ShowProgressBar()
+                        val navController = rememberNavController()
+                        NavigationComponent(
+                            navController = navController,
+                            list = response,
+                            viewModel = viewModel
+                        )
                     }
-
-
                 }
             }
-        }
+
     }
 }

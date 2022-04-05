@@ -2,6 +2,7 @@ package com.proof.marvel.presentation.di
 
 import android.app.Application
 import androidx.lifecycle.ViewModelProvider
+import com.proof.marvel.domain.repository.Repository
 import com.proof.marvel.domain.usecase.GetDetailsUseCase
 import com.proof.marvel.domain.usecase.GetListUseCase
 import com.proof.marvel.presentation.viewModel.ViewModelFactory
@@ -19,12 +20,14 @@ object FactoryModule {
     fun provideViewModelFactory(
         application: Application,
         getListUseCase: GetListUseCase,
-        getDetailsUseCase: GetDetailsUseCase
+        getDetailsUseCase: GetDetailsUseCase,
+        repository: Repository
     ): ViewModelProvider.Factory {
         return ViewModelFactory(
             application,
             getListUseCase,
-            getDetailsUseCase
+            getDetailsUseCase,
+            repository
         )
     }
 
