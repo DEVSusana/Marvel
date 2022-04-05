@@ -53,7 +53,8 @@ class ViewModel(
 
     }
 
-    val getList: MutableLiveData<Resource<MarvelApiResponse>> = MutableLiveData()
+    val _getList: MutableLiveData<Resource<MarvelApiResponse>> = MutableLiveData()
+    val getList get() = _getList
 
     fun getListResponse() = viewModelScope.launch(Dispatchers.IO) {
         getList.postValue(Resource.Loading())
@@ -69,7 +70,8 @@ class ViewModel(
         }
     }
 
-    val getDetail: MutableLiveData<Resource<MarvelApiResponse>> = MutableLiveData()
+    val _getDetail: MutableLiveData<Resource<MarvelApiResponse>> = MutableLiveData()
+    val getDetail get() = _getDetail
 
     fun getDetailResponse(id: Int) = viewModelScope.launch(Dispatchers.IO) {
         getDetail.postValue(Resource.Loading())
