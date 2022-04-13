@@ -74,7 +74,6 @@ object NetModule {
             .client(apiClient)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .baseUrl(BuildConfig.URL_BASE)
             .build()
     }

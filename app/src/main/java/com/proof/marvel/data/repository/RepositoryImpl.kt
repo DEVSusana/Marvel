@@ -11,9 +11,10 @@ import javax.inject.Inject
 class RepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource
 ) : Repository {
-    override fun getList(offset: Int): Observable<MarvelApiResponse> {
-
-        return remoteDataSource.getList(offset)
+    override suspend fun getList(offset: Int): Resource<MarvelApiResponse> {
+        return responseToResource(
+            remoteDataSource.getList(offset)
+        )
     }
 
     override suspend fun getDetails(characterId: Int): Resource<MarvelApiResponse> {

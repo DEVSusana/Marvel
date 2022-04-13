@@ -3,52 +3,38 @@ package com.proof.marvel.view.pagin
 
 import android.util.Log
 import androidx.paging.PageKeyedDataSource
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import com.proof.marvel.data.api.ApiService
 import com.proof.marvel.data.model.Result
 import com.proof.marvel.domain.repository.Repository
+import com.proof.marvel.presentation.di.NetModule
 import io.reactivex.disposables.CompositeDisposable
+import retrofit2.HttpException
+import java.io.IOException
 
-class ResultDataSource (
-    private val repository: Repository,
-    private val compositeDisposable: CompositeDisposable
-) : PageKeyedDataSource<Int, Result>()
-        {
-    override fun loadInitial(params: PageKeyedDataSource.LoadInitialParams<Int>, callback: PageKeyedDataSource.LoadInitialCallback<Int, Result>) {
-        val numberOfItems = params.requestedLoadSize
-        createObservable(0, 1, numberOfItems, callback, null)
+class ResultDataSource: PagingSource<Int, Result>(){
+
+    override fun getRefreshKey(state: PagingState<Int, Result>): Int? {
+        return state.anchorPosition
     }
 
-    override fun loadAfter(params: PageKeyedDataSource.LoadParams<Int>, callback: PageKeyedDataSource.LoadCallback<Int, Result>) {
-        val page = params.key
-        val numberOfItems = params.requestedLoadSize
-        createObservable(page, page + 1, numberOfItems, null, callback)
-    }
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Result> {
+        return try {
+            val nextPage = params.key ?: 1
+            val marvelList = NetModule.provideApiService(NetModule.provideRetrofit()).getCharactersList(nextPage)
 
-    override fun loadBefore(params: PageKeyedDataSource.LoadParams<Int>, callback: PageKeyedDataSource.LoadCallback<Int, Result>) {
-        val page = params.key
-        val numberOfItems = params.requestedLoadSize
-        createObservable(page, page - 1, numberOfItems, null, callback)
-    }
-
-    private fun createObservable(
-        requestedPage: Int,
-        adjacentPage: Int,
-        requestedLoadSize: Int,
-        initialCallback: PageKeyedDataSource.LoadInitialCallback<Int, Result>?,
-        callback: PageKeyedDataSource.LoadCallback<Int, Result>?
-    ) {
-        compositeDisposable.add(
-            repository.getList(requestedPage * requestedLoadSize)
-                .subscribe(
-                    { response ->
-                        Log.d("", "Loading page: $requestedPage")
-                        initialCallback?.onResult(response.data.results, null, adjacentPage)
-                        callback?.onResult(response.data.results, adjacentPage)
-                    },
-                    { error ->
-                        Log.e("", "error", error)
-                    }
+            LoadResult.Page(
+                data = marvelList.body()?.data!!.results,
+                prevKey = if (nextPage == 1) null else nextPage - 1,
+                nextKey = if (marvelList.body()?.data?.results.isNullOrEmpty()) null else marvelList.body()?.data?.offset?.plus(
+                    50
                 )
-        )
+            )
+        } catch (exception: IOException) {
+            return LoadResult.Error(exception)
+        } catch (exception: HttpException) {
+            return LoadResult.Error(exception)
+        }
     }
 }

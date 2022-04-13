@@ -5,6 +5,6 @@ import io.reactivex.Observable
 import retrofit2.Response
 
 interface RemoteDataSource {
-    fun getList(offset: Int): Observable<MarvelApiResponse>
+    suspend fun getList(offset: Int): Response<MarvelApiResponse>
     suspend fun getDetails(characterId: Int): Response<MarvelApiResponse>
 }

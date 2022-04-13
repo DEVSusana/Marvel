@@ -6,6 +6,6 @@ import io.reactivex.Observable
 import retrofit2.Response
 
 interface Repository {
-    fun getList(offset: Int): Observable<MarvelApiResponse>
+    suspend fun getList(offset: Int): Resource<MarvelApiResponse>
     suspend fun getDetails(characterId: Int): Resource<MarvelApiResponse>
 }

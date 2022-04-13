@@ -32,28 +32,19 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var repository: Repository
 
-    private lateinit var list: List<Result>
-
     @SuppressLint("CheckResult")
     @ExperimentalCoilApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this, viewModelFactory)[ViewModel::class.java]
-        viewModel.getList
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { response ->
-                response.let {
-                    setContent {
-                        val navController = rememberNavController()
-                        NavigationComponent(
-                            navController = navController,
-                            list = response,
-                            viewModel = viewModel
-                        )
-                    }
-                }
-            }
+
+        setContent {
+            val navController = rememberNavController()
+            NavigationComponent(
+                navController = navController,
+                viewModel = viewModel
+            )
+        }
 
     }
 }

@@ -9,10 +9,10 @@ import retrofit2.http.Query
 
 interface ApiService {
     @GET("v1/public/characters")
-    fun getCharactersList(
+    suspend fun getCharactersList(
         @Query("offset")
-        offset: Int? = 0
-    ): Observable<MarvelApiResponse>
+        offset: Int
+    ): Response<MarvelApiResponse>
 
     @GET("v1/public/characters/{characterId}")
     suspend fun getCharacterInfo(
