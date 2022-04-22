@@ -30,9 +30,7 @@ fun DisplayList(navController: NavController, viewModel: ViewModel) {
                 resultItems
             ) { index, item ->
                 if (item != null) {
-                    ListItem(navController = navController, detail = item, index, selectedIndex) { i ->
-                        selectedIndex = i
-                    }
+                    ListItem(navController = navController, detail = item, index, selectedIndex)
                 }
             }
 
@@ -43,9 +41,11 @@ fun DisplayList(navController: NavController, viewModel: ViewModel) {
         when {
             loadState.refresh is LoadState.Loading -> {
                 //You can add modifier to manage load state when first time response page is loading
+                ShowProgressBar()
             }
             loadState.append is LoadState.Loading -> {
                 //You can add modifier to manage load state when next response page is loading
+                ShowProgressBar()
             }
             loadState.append is LoadState.Error -> {
                 //You can use modifier to show error message

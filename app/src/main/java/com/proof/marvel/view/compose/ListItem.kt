@@ -22,8 +22,7 @@ fun ListItem(
     navController: NavController,
     detail: Result,
     index: Int,
-    selectedIndex: Int,
-    onClick: (Int) -> Unit
+    selectedIndex: Int
 ) {
     val backgroundColor =
         if (index == selectedIndex) MaterialTheme.colors.primary else MaterialTheme.colors.background
