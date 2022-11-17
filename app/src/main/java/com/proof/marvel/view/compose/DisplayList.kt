@@ -19,7 +19,7 @@ import com.proof.marvel.presentation.viewModel.ViewModel
 @ExperimentalCoilApi
 @Composable
 fun DisplayList(navController: NavController, viewModel: ViewModel) {
-    var selectedIndex by remember { mutableStateOf(-1) }
+    val selectedIndex by remember { mutableStateOf(-1) }
     val resultList = viewModel.resultCharacter
     val resultItems: LazyPagingItems<Result> = resultList.collectAsLazyPagingItems()
     Surface(color = MaterialTheme.colors.background) {
