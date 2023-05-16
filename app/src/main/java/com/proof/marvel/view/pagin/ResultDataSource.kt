@@ -1,15 +1,10 @@
 package com.proof.marvel.view.pagin
 
 
-import android.util.Log
-import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.proof.marvel.data.api.ApiService
 import com.proof.marvel.data.model.Result
-import com.proof.marvel.domain.repository.Repository
 import com.proof.marvel.presentation.di.NetModule
-import io.reactivex.disposables.CompositeDisposable
 import retrofit2.HttpException
 import java.io.IOException
 
