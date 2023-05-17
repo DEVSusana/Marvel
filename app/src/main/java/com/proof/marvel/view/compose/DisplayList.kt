@@ -2,6 +2,7 @@ package com.proof.marvel.view.compose
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -11,6 +12,8 @@ import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
 import androidx.paging.compose.itemsIndexed
 import coil.annotation.ExperimentalCoilApi
 import com.proof.marvel.data.model.Result
@@ -26,12 +29,17 @@ fun DisplayList(navController: NavController, viewModel: ViewModel) {
         LazyColumn(
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
         ) {
-            itemsIndexed(
-                resultItems
-            ) { index, item ->
-                if (item != null) {
-                    ListItem(navController = navController, detail = item, index, selectedIndex)
-                }
+            items(
+        count = resultItems
+            .itemCount,
+        key = resultItems.itemKey(),
+        contentType = resultItems.itemContentType(
+            )
+    ) { index ->
+        val item = resultItems[index]
+        if (item != null) {
+            ListItem(navController = navController, detail = item, index, selectedIndex)
+        }
             }
 
         }

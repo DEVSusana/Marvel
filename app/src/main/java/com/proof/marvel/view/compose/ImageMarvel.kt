@@ -12,6 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
+import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
 import com.proof.marvel.data.model.Result
 
@@ -20,10 +21,9 @@ import com.proof.marvel.data.model.Result
 @Composable
 fun ImageMarvel(detail: Result) {
     Image(
-        painter = rememberImagePainter(
-            detail.thumbnail.let {
-                "${detail.thumbnail.path}.${detail.thumbnail.extension}"
-            }
+        painter = rememberAsyncImagePainter(detail.thumbnail.let {
+            "${detail.thumbnail.path}.${detail.thumbnail.extension}"
+        }
         ),
         contentDescription = null,
         contentScale = ContentScale.Inside,

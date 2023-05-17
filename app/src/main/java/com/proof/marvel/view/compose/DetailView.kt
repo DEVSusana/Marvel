@@ -25,9 +25,7 @@ fun DetailView(viewModel: ViewModel, id: Int) {
 
     when (viewModel.getDetail.value) {
         is Resource.Success -> {
-            val detail by remember {
-                mutableStateOf(viewModel.getDetail.value)
-            }
+            val detail = viewModel.getDetail.value
             viewModel.getDetail.value?.data.let {
                 Row(
                     modifier = Modifier
@@ -96,6 +94,9 @@ fun DetailView(viewModel: ViewModel, id: Int) {
             ShowProgressBar()
         }
 
+        else -> {
+
+        }
     }
 
 }

@@ -62,7 +62,7 @@ class ViewModel(
         ResultDataSource()
     }.flow.cachedIn(viewModelScope)
 
-    val _getDetail: MutableLiveData<Resource<MarvelApiResponse>> = MutableLiveData()
+    private val _getDetail: MutableLiveData<Resource<MarvelApiResponse>> = MutableLiveData()
     val getDetail get() = _getDetail
 
     fun getDetailResponse(id: Int) = viewModelScope.launch(Dispatchers.IO) {
