@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -21,11 +23,14 @@ import com.proof.marvel.presentation.viewModel.ViewModel
 @ExperimentalCoilApi
 @Composable
 fun DetailView(viewModel: ViewModel, id: Int) {
-    viewModel.getDetailResponse(id)
+    LaunchedEffect(id){
+        viewModel.getDetailResponse(id)
+    }
+    val detail by viewModel.getDetail.observeAsState()
 
-    when (viewModel.getDetail.value) {
+    when (detail) {
         is Resource.Success -> {
-            val detail = viewModel.getDetail.value
+
             viewModel.getDetail.value?.data.let {
                 Row(
                     modifier = Modifier

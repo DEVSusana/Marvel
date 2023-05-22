@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
@@ -62,20 +63,22 @@ class ViewModel(
         ResultDataSource()
     }.flow.cachedIn(viewModelScope)
 
-    private val _getDetail: MutableLiveData<Resource<MarvelApiResponse>> = MutableLiveData()
-    val getDetail get() = _getDetail
+    private val _getDetail: MutableLiveData<Resource<MarvelApiResponse>> by lazy {
+        MutableLiveData<Resource<MarvelApiResponse>>()
+    }
+    val getDetail : LiveData<Resource<MarvelApiResponse>> get() = _getDetail
 
     fun getDetailResponse(id: Int) = viewModelScope.launch(Dispatchers.IO) {
-        getDetail.postValue(Resource.Loading())
+        _getDetail.postValue(Resource.Loading())
         try {
             if (isNetworkAvailable(app)) {
                 val apiResult = getDetailsUseCase.execute(id)
-                getDetail.postValue(apiResult)
+                _getDetail.postValue(apiResult)
             } else {
-                getDetail.postValue(Resource.Error("Internet is not available"))
+                _getDetail.postValue(Resource.Error("Internet is not available"))
             }
         } catch (e: Exception) {
-            getDetail.postValue(Resource.Error(e.message.toString()))
+            _getDetail.postValue(Resource.Error(e.message.toString()))
         }
     }
 
